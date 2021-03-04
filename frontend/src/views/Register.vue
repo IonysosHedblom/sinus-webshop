@@ -30,7 +30,8 @@
       Register
     </button>
 
-    <button @click.prevent="goToLogin">Already have an account? Log in</button>
+    <button class="login-btn" @click.prevent="goToLogin">Already have an account? Log in</button>
+    
   </form>
 </template>
 
@@ -79,7 +80,11 @@ form {
   gap: 3rem;
   margin: 2rem 0 0;
   max-width: 850px;
-  margin: 60px auto;
+  margin: 100px auto;
+}
+
+form input{
+  background-color: white;
 }
 
 .input-group {
@@ -111,7 +116,17 @@ input:focus ~ label {
   outline: none;
   grid-column: span 2;
 }
-/* .col-2 {
-  grid-column: auto/span 2;
-} */
+
+.login-btn{
+  width: 332px;
+  height: 43px;
+  align-self: center;
+  font-family: "Lato";
+  color: white;
+  background-color: #5eb593;
+  border: none;
+  box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  cursor: pointer;
+}
 </style>

@@ -4,49 +4,67 @@
       <section class="top-products">
         <h1>TOP-SELLING SKATEBOARDS</h1>
         <div class="top-img-wrapper">
-          <p>Left Img</p>
-          <p>Right Img</p>
+          <Product-card
+            @click.native="changeRoute(product._id)"
+            class="prod-card-left"
+            v-for="product in products.slice(0, 1)"
+            :key="product._id"
+            :product="product"
+          />
+
+          <Product-card
+            @click.native="changeRoute(product._id)"
+            class="prod-card-right"
+            v-for="(product, index) in products.slice(1, 2)"
+            :key="index"
+            :product="product"
+          />
         </div>
-        <h3>VIEW ALL PRODUCTS</h3>
+        <div class="all-products">
+          <h3>VIEW ALL PRODUCTS</h3>
+          <img class="arrow" src="@/assets/arrow-double.svg" />
+        </div>
       </section>
     </div>
 
     <div class="landing-bottom">
       <section class="bottom-products">
-        <!-- <p>Filter Section</p> -->
         <h2>ALL PRODUCTS</h2>
-        <p>Dropdown menu</p>
+        <!-- <p>Dropdown menu</p> -->
       </section>
 
       <section class="product-grid-container">
-        <ProductCard  v-for="(product,index) in products" :key="index" :product="product"/>
-        <!-- <p class="item-2">Product 2</p>
-        <p class="item-3">Product 3</p>
-        <p class="item-4">Product 4</p>
-        <p class="item-5">Product 5</p>
-        <p class="item-6">Product 6</p>
-        <p class="item-7">Product 7</p>
-        <p class="item-8">Product 8</p>
-        <p class="item-9">Product 9</p> -->
+        <ProductCard
+          @click.native="changeRoute(product._id)"
+          v-for="(product, index) in products"
+          :key="index"
+          :product="product"
+        />
       </section>
-      <p class="progress-bar">Showing 9 out of 30 products</p>
-      <button>SHOW MORE</button>
+      <div class="progress-bar">
+        <p>Showing 9 out of 30 products</p>
+        <button>SHOW MORE</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import ProductCard from '@/components/Product/ProductCard.vue'
+import ProductCard from "@/components/Product/ProductCard.vue";
 export default {
-  components:{ProductCard,},
+  components: { ProductCard },
 
-  computed:{
-    products(){
+  computed: {
+    products() {
       return this.$store.getters.getProducts;
-    }
-  }
-  
+    },
+  },
+
+  methods: {
+    changeRoute(id) {
+      this.$router.push(`/singleproduct/${id}`);
+    },
+  },
 };
 </script>
 
@@ -55,19 +73,34 @@ export default {
   color: black;
 }
 
-.landing-top{
+.landing-wrapper {
+  margin-top: 75px;
+}
+
+.landing-top {
   height: 862px;
   width: 1440px;
-  /* top: 84px; */
-  background-image: url('../assets/BG image landing.jpg');
+  background-image: url("../assets/BG image landing.jpg");
   margin-top: 20px;
+}
+
+.top-products h1{
+  display: flex;
+  justify-content: center;
 }
 
 .landing-top h1,
 h3 {
   color: white;
-  /* margin-top: 50px; */
-  /* z-index: 999; */
+  font-family: "Bebas Neue";
+  font-size: 35px;
+  padding: 20px;
+  
+}
+
+.all-products {
+  display: flex;
+  justify-content: center;
 }
 
 .top-img-wrapper {
@@ -77,11 +110,21 @@ h3 {
   gap: 30px;
 }
 
-.top-img-wrapper > p {
+.prod-card-left,
+.prod-card-right {
   height: 526px;
   width: 419px;
-  border-radius: 5px;
-  background-color: white;
+  border-radius: 10px;
+  overflow-y: auto;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  margin-top: 2rem;
+  padding: 2rem;
+
+  width: 400px;
+  background-color: whitesmoke;
 }
 
 .landing-bottom {
@@ -90,18 +133,26 @@ h3 {
   background-color: #3c4858;
 }
 
+.landing-bottom h2 {
+  padding: 15px;
+  font-family: "Bebas Neue";
+}
+
 .product-grid-container {
   display: grid;
-  /* display: grid; */
   gap: 20px;
   grid-template-columns: 270px 270px 270px;
   grid-auto-rows: 350px;
-  /* grid-template-columns: 3;
-  grid-template-rows: 3; */
   align-items: center;
   justify-content: center;
-  /* row-gap: 20px;
-  column-gap: 20px;  */
+  border: none;
+}
+
+.bottom-products h2,
+p {
+  color: white;
+  display: flex;
+  justify-content: center;
 }
 
 .product-grid-container > p {
@@ -109,56 +160,24 @@ h3 {
   width: 245px;
   background-color: white;
 }
-
-/* .item-1 {
-  grid-column: 1/1;
-  grid-row: 1/1;
-}
-
-.item-2 {
-  grid-column: 2/2;
-  grid-row: 1/1;
-}
-
-.item-3 {
-  grid-column: 3/3;
-  grid-row: 1/1;
-}
-
-.item-4 {
-  grid-column: 1/1;
-  grid-row: 2/2;
-}
-
-.item-5 {
-  grid-column: 2/2;
-  grid-row: 2/2;
-}
-
-.item-6 {
-  grid-column: 3/3;
-  grid-row: 2/2;
-}
-
-.item-7 {
-  grid-column: 1/1;
-  grid-row: 3/3;
-}
-
-.item-8 {
-  grid-column: 2/2;
-  grid-row: 3/3;
-}
-
-.item-9 {
-  grid-column: 3/3;
-  grid-row: 3/3;
-} */
-
 button {
   height: 43px;
   width: 332px;
   border-radius: 5px 0px 0px 5px;
   background-color: #3c8af1;
 }
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  gap: 5px;
+  align-items: center;
+}
+
+
+
+
 </style>

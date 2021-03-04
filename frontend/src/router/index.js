@@ -26,7 +26,7 @@ const routes = [
     
   },
   {
-    path: "/MakeOrder",
+    path: "/makeorder",
     name: "MakeOrder",
     component: MakeOrder,
   },
@@ -36,7 +36,7 @@ const routes = [
     component: Cart,
   },
   {
-    path: "/singleproduct",
+    path: "/singleproduct/:id",
     name: "Singleproduct",
     component: Singleproduct,
   },

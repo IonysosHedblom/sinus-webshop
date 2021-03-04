@@ -1,185 +1,162 @@
 //
 <template>
-  <div class="cart">
-    <img class="btn-icon" src="@/assets/icon-bag-white.svg" />
-    <div
-      class="product-list"
-      v-for="(product, index) in cartItems"
-      :key="index"
-    >
-      <div class="item-info" :key="index" @click="removeFromCart(index)">
-        <section class="thumbnail">
-          <img class="imgFile" :src="require(`@/assets/${product.imgFile}`)" />
-        </section>
-        <section class="product-info">
-          <h3 class="title">{{ product.title }}</h3>
-          <p class="shortDesc">{{ product.shortDesc }}</p>
-        </section>
-
-        <p class="price">{{ product.price }} Kr</p>
+  <div class="wrapper">
+    <div class="cart">
+      <div class="cart-header">
+        <h4>Cart ({{ cartItems.length }} items)</h4>
+        <img src="../assets/sinus-logo.svg" />
       </div>
+
+      <CartItem
+        @forceRerender="forceRerender"
+        v-for="item in cartItems"
+        :key="`${componentKey}-${item._id}`"
+        :product="item"
+      />
     </div>
-    <span class="total-price">
-      <p class="total-lable">TOTAL</p>
-      <p class="sek-lable">
-        <strong>{{ $store.getters.getTotalCartPrice }}</strong>
-      </p>
-    </span>
-    <div>
-      <a @click="sendToOrder" class="btn"> Take My Money</a>
+    <div class="total-price">
+      <p class="total-lable">Total:</p>
+      <div class="price-container">
+        <div class="item-total">
+          <p class="sek-lable">Item total:</p>
+          <p class="price">
+            <strong>{{ totalPrice ? `${totalPrice} KR` : "" }}</strong>
+          </p>
+        </div>
+
+        <div class="shipping-wrapper">
+          <p class="shipping">Shipping:</p>
+          <p class="free">FREE</p>
+        </div>
+        <hr />
+      </div>
+
+      <div>
+        <input class="details" type="text" placeholder="Enter Discount Code" />
+        <a @click="addOrder" class="btn"> Go to checkout</a>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import CartItem from "@/components/ShoppingCart/CartItem.vue";
 export default {
   name: "Cart",
-  props: { cartItem: Object },
+  components: { CartItem },
   data() {
     return {
       showModal: false,
-      totalSum: 0,
+      componentKey: 0,
     };
   },
   computed: {
     cartItems() {
-      return this.$store.state.cartItems;
+      return this.$store.getters.getOrderItems;
+    },
+    totalPrice() {
+      return this.$store.getters.getTotalPrice;
     },
   },
   methods: {
-    sendToOrder() {
+    addOrder() {
       this.$router.push("/MakeOrder");
     },
-    removeFromCart(index) {
-      this.$store.commit("removeFromCart", index);
+
+    getUser() {
+      this.$store.dispatch("getUser");
+    },
+
+    forceRerender() {
+      this.componentKey += 1;
     },
   },
 };
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&display=swap");
+.wrapper {
+  margin: 160px auto;
+  display: flex;
+  justify-content: space-evenly;
+  width: 85%;
+  min-width: 350px;
+  max-width: 1440px;
+}
+
 .cart {
-  border: 2px solid gray;
-  margin-top: 5rem;
-  position: absolute;
-  top: 0;
-  bottom: 0.1;
-  left: 3;
-  right: 0;
+  width: 60%;
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background: #9199a5;
+  height: 102px;
+  box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.256);
+}
+
+h4 {
+  font-weight: 400;
+  font-family: "Lato", sans-serif;
+  font-size: 30px;
+  color: #fff;
+}
+
+.cart-header img {
+  object-fit: cover;
+  width: 20%;
+}
+.total-price {
+  padding: 0 25px;
+  width: 30%;
+  height: 450px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  background-color: #3c4858;
-  width: 18rem;
-  height: auto;
-  max-height: 800px;
-  min-height: 150px;
-  overflow-y: scroll;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.6);
+  justify-content: space-between;
+  background-color: whitesmoke;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
 }
-.cart .product-list {
+
+.total-lable {
+  color: #3c4858;
+  padding-top: 30px;
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.item-total,
+.shipping-wrapper {
+  font-family: "Montserrat", sans-serif;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 250px;
-  height: 45px;
-  margin-bottom: 2rem;
-}
-.cart .imgFile {
-  float: left;
-  width: 50px;
-  height: 40px;
-  border: 4px;
-}
-.cart .imgFile img {
-  float: left;
-  width: 45px;
-  height: 40px;
-}
-.cart .item-info {
-  display: flex;
-  flex-direction: row;
-  float: right;
-}
-.cart .title {
-  margin-left: 1rem;
-  font-size: 11px;
-  align-items: flex-start;
-  height: 20px;
-  margin-top: 1rem;
-}
-.cart .shortDesc {
-  font-size: 9px;
-  font-weight: bold;
-  margin-top: 2rem;
-  float: left;
-}
-.cart .price {
-  display: flex;
-  width: 10px;
-  align-items: flex-end;
-  justify-content: flex-end;
-  font-size: 12px;
-  margin-left: 5rem;
-}
-.cart .total-price {
-  height: 20px;
-  display: flex;
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 0.5rem;
-}
-.cart .total-price .price {
-  display: flex;
-  align-items: flex-end;
-  width: 20px;
-  height: 10px;
-  float: right;
-}
-.cart .total-lable {
-  color: black;
-}
-.cart .sek-lable {
-  margin-left: 10rem;
-}
-.btn {
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  margin: 30px 0;
   align-items: center;
-  color: black;
-  height: 40px;
-  width: 250px;
+  color: #000;
+  font-size: 18px;
 }
-.btn .btn-icon {
-  margin-left: 4.5rem;
-  padding-right: 5px;
-}
+
 .btn {
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 248px;
-  height: 4rem;
-  font-family: "PT Serif";
-  font-size: 1.5rem;
+  font-family: "Lato", sans-serif;
+  font-size: 1.2rem;
   text-transform: uppercase;
-  font-weight: 700;
-  text-decoration: none;
-  color: black;
-  border: 0.125rem solid rgba(0, 0, 0, 0.6);
-  box-sizing: border-box;
-  border-radius: 3.125rem;
-  margin: 2rem 0;
-  margin-left: 2.5rem;
+  padding: 10px 0;
+  font-weight: 500;
+  color: #fbfbfb;
+  margin: 30px 0;
+  background-color: #5eb593;
+  box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.15);
 }
 .btn:hover {
-  background: #5eb593;
-  color: #ddd;
-}
-.btn:active {
   background: #000;
   color: #fff;
 }
