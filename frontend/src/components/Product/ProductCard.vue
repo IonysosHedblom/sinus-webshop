@@ -3,12 +3,6 @@
     <div class="img-container">
       <img :src="require(`../../assets/${product.imgFile}`)" />
     </div>
-<<<<<<< HEAD
-    <h3>{{ product.title }}</h3>
-    <p>{{ product.shortDesc }}</p>
-    {{ product.price }} KR
-    {{ product.rating }}
-=======
     <div class="title-desc">
       <h3>{{ product.title }}</h3>
       <p class="shortdesc" v-if="!isRoute">{{ product.shortDesc }}</p>
@@ -18,7 +12,6 @@
       <p class="rating">{{ product.rating }}</p>
       <img class="star" src="@/assets/Star.svg" />
     </div>
->>>>>>> devbranch
   </article>
 </template>
 
@@ -27,14 +20,11 @@ export default {
   props: {
     product: Object,
   },
-<<<<<<< HEAD
-=======
   computed:{
     isRoute(){
       return this.$router.currentRoute.name==="Singleproduct"
     }
   }
->>>>>>> devbranch
 };
 </script>
 
@@ -42,11 +32,7 @@ export default {
 article {
   display: grid;
   grid-template-columns: auto auto auto;
-<<<<<<< HEAD
-  grid-template-rows: repeat(6, 55px);
-=======
   grid-template-rows: auto auto auto;
->>>>>>> devbranch
   background-color: white;
   height: 327px;
   width: 245px;
@@ -113,28 +99,10 @@ article {
   margin-left: 15px;
 }
 
-<<<<<<< HEAD
-.img-container {
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  grid-column: span 6;
-  grid-row: span 4;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-=======
->>>>>>> devbranch
 img {
   width: 75%;
   height: 80%;
   object-fit: cover;
   padding-top: 1.5rem;
-<<<<<<< HEAD
-
 }
 </style>
-=======
-}
-</style>
->>>>>>> devbranch
