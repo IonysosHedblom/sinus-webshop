@@ -11,7 +11,7 @@
     <button class="submit-btn" type="submit" @click.prevent="loginUser">
       Login
     </button>
-    <button  class="register-btn" @click.prevent="goToRegister">
+    <button class="register-btn" @click.prevent="goToRegister">
       Don't have an account? Register
     </button>
   </form>
@@ -54,7 +54,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  margin: 2rem 0 0;
+  padding-top: 70px;
   max-width: 700px;
   margin: 100px auto;
 }
@@ -75,11 +75,8 @@ input {
   background: transparent;
   background-color: white;
 }
-
-input:focus ~ label {
-  top: -1.5rem;
-  left: 0;
-  font-size: 1em;
+label {
+  color: #fff;
 }
 
 .submit-btn {
@@ -88,7 +85,7 @@ input:focus ~ label {
   outline: none;
   grid-column: span 2;
 }
-.register-btn{
+.register-btn {
   width: 332px;
   height: 43px;
   align-self: center;

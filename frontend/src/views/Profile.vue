@@ -6,7 +6,7 @@
         <header>
           <img src="../assets//user.png" class="user" />
           <h2>{{ user.name }}</h2>
-          <h3>Email: {{ user.email }}</h3>
+          <h3>{{ user.email }}</h3>
           <!-- <p>{{ user.address.street }}</p> -->
           <hr />
         </header>
@@ -18,7 +18,9 @@
       <br />
       <ul v-if="user.history">
         <h5>Order history:</h5>
-        <li>{{ user.history[0]._id }}</li>
+        <li v-for="order in user.history" :key="order._id">
+          {{ order._id }}
+        </li>
       </ul>
     </div>
     <form v-if="edit">
@@ -81,9 +83,14 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  margin: 10px 0;
+  font-size: 2rem;
+}
 h4 {
   font-family: "Lato", sans-serif;
   font-size: 25px;
+  margin: 10px 0;
 }
 .profile-container {
   color: rgb(31, 28, 28);
@@ -91,6 +98,11 @@ h4 {
   max-width: 1440px;
   width: 60%;
   background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   margin-bottom: 100px;
   box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
     0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
@@ -111,7 +123,7 @@ h4 {
   font-weight: 500;
   color: #fbfbfb;
   padding: 10px 20px;
-  margin: 10px 0;
+  margin: 10px auto;
   /* border: 0.125rem solid rgba(0, 0, 0, 0.6); */
   background-color: #5eb593;
   box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.15);

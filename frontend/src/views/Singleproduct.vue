@@ -38,20 +38,20 @@
         </div>
         <ProductCard
           class="rec-item"
-          v-for="(product, index) in products.slice(9, 10)"
-          :key="index"
+          v-for="product in products.slice(9, 10)"
+          :key="product._id"
           :product="product"
         />
         <ProductCard
           class="rec-item"
-          v-for="(product, index) in products.slice(4, 5)"
-          :key="index"
+          v-for="product in products.slice(4, 5)"
+          :key="product._id"
           :product="product"
         />
         <ProductCard
           class="rec-item"
-          v-for="(product, index) in products.slice(6, 7)"
-          :key="index"
+          v-for="product in products.slice(6, 7)"
+          :key="product._id"
           :product="product"
         />
       </section>
@@ -162,7 +162,7 @@ p {
 .info-text {
   text-align: center;
 }
-.info-text{
+.info-text {
   padding: 30px;
 }
 .product-info-bottom {
@@ -171,7 +171,7 @@ p {
   flex-direction: column;
   justify-content: space-around;
   height: 255px;
-} 
+}
 .price {
   padding-left: 20px;
 }
@@ -199,12 +199,12 @@ p {
   width: 170px;
   height: 164px;
 }
-.rec-text-wrapper{
-  background-color: #c4c4c4 ;
+.rec-text-wrapper {
+  background-color: #c4c4c4;
   height: 60px;
   text-align: center;
 }
-.rec-text{
+.rec-text {
   font-size: 13px;
   font-weight: 400;
   padding: 15px;
@@ -212,6 +212,5 @@ p {
 .rec-item {
   width: 170px;
   height: 228px;
-  background-color: ;
 }
 </style>

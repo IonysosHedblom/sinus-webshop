@@ -13,7 +13,7 @@
             <ul class="list">
               <li
                 v-for="item in this.$store.getters.getOrderItems"
-                :key="item"
+                :key="item._id"
                 class="list-items"
               >
                 <img
